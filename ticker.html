@@ -1,0 +1,101 @@
+<head>
+	<title>QUOTE.IT</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--[if lt IE 9]><script src="/js/html5shiv.js"></script><![endif]-->
+</head>
+
+<body>
+	<div class="row-fluid">
+		<header>
+			<h1>
+				Welcome to <em>quote.it</em><br>
+				A quick and simple stock market ticker service.
+			</h1>
+			<p>quotes are refreshed every 300 seconds - 
+			this example has been developed with Meteor.js, Handlebar.js, CoffeeScript and Twitter Bootstrap
+			- brought to you by Elie Labeca</p>
+		</header>
+		<div class="span9 offset1" id="container">
+			<div class="form-inline">
+				{{> button_bar}}
+			</div>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>Select</td>
+						<td>Remove</td>
+						<td>Symbol</td>
+						<td>Name</td>
+						<td>Ask</td>
+						<td>Bid</td>
+						<td>Last trade</td>
+						<td>Previous close</td>
+					</tr>
+				</thead>
+				<tbody id="quotes">
+					{{> quote_list}}
+				</tbody>
+			</table>
+			<div id="quote-carousel" class="carousel slide">
+			  <div id="quote-carousel-inner" class="carousel-inner">
+				{{> quote_carousel}}
+			  </div>
+			    <a class="carousel-control left" href="#quote-carousel" data-slide="prev">&lsaquo;</a>
+			    <a class="carousel-control right" href="#quote-carousel" data-slide="next">&rsaquo;</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+<template name="quote_list">
+	{{#each quotes}}
+		{{> quote_item}}
+	{{/each}}
+</template>
+
+<template name="quote_carousel">
+	{{#each quotes}}
+		{{> quote_carousel_item}}
+	{{/each}}
+</template>
+
+<template name="button_bar">
+	<label>Add another symbol here (examples: SBUX, ORCL or TWX)</label><br/>
+	<input id="input-symbol" type="text" class="input-small" placeholder="Symbol to add">
+	<button id="btn-add" class="btn btn-info" type="button">Add</button>
+	<button id="btn-delete" class="btn btn-danger" type="button">Remove selected</button>
+	<button id="btn-refresh" class="btn" type="button">Refresh</button>
+</template>
+
+<template name="quote_item">
+	<tr id="{{_id}}">
+		<td><input class="select" type="checkbox" {{selected}} /></td>
+		<td><a class="badge badge-important remove" href"#">X</a></td>
+		<td>{{symbol}}</td>
+		<td>{{name}}</td>
+		<td>{{ask}}</td>
+		<td>{{bid}}</td>
+		<td>{{last_trade}}</td>
+		<td>{{previous_close}}</td>
+	<tr/>
+</template>
+
+<template name="quote_carousel_item">
+	<div class="item">
+		<div class="container">
+			<div class="d d1">
+				<h1>{{symbol}}</h1>
+				<h3>{{name}}</h3>
+				<h4>Last trade: {{last_trade}}</h4>
+			</div>
+			<div class="d d2">
+				<h2>Ask: {{ask}}</h2>
+				<h2>Bid: {{bid}}</h2>
+				<h4>Previous close: {{previous_close}}</h4>
+			</div>
+		</div>
+		<div class="carousel-caption">
+			<p>{{symbol}} - {{name}}</p>
+		</div>
+	</div>
+</template>
