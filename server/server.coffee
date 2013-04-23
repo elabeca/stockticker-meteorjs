@@ -12,7 +12,6 @@ getQuotesFromServer = (symbol, options) ->
 	i = 0
 	if symbol then stocks = symbol else stocks = _.pluck(Quotes.find({}, { symbol: 1, _id: 0 }).fetch(), "symbol").join "+"
 	options or= {}
-	options.filename or= 'quotes.txt'
 	options.hostname or= 'download.finance.yahoo.com'
 	options.path or= "/d/quotes.csv?s=#{stocks}&f=snabl1p0"
 	console.log "==> Calling host #{options.hostname}#{options.path}"
